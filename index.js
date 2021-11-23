@@ -10,7 +10,9 @@ app.get('/', (req, res) => {
 })
 
 // retrieve all books
-app.get('/books', db.books.find)
+app.get('/', db.books.find)
+//retrieve filtered books
+app.get('/books', db.books.findOne)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
