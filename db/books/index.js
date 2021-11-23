@@ -46,8 +46,23 @@ const findById = (req, res) => {
     .catch((err) => console.log(err))
 }
 
+// create new book
+const create = (req, res) => {
+  const { title, author, pageCount, id, genre } = req.body
+  client
+    .query(`INSERT INTO books VALUES ($1, $2, $3, $4, $5)`, [
+      title,
+      author,
+      pageCount,
+      id,
+      genre,
+    ])
+    .then((response) => console.log(response))
+}
+
 module.exports = {
   find,
   findOne,
   findById,
+  create,
 }
