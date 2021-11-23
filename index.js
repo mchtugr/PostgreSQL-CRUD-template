@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
 app.get('/', db.books.find)
 //retrieve filtered books
 app.get('/books', db.books.findOne)
+// retrieve single book
+app.get('/books/:id', db.books.findById)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
