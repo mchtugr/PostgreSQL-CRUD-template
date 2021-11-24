@@ -65,7 +65,7 @@ const create = (req, res) => {
     .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
-// update a collection
+// update a book collection
 const updateOne = (req, res) => {
   const { id, genre } = req.body
   client
@@ -76,10 +76,21 @@ const updateOne = (req, res) => {
     .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
+// delete a a book collection
+
+const removeOne = (req, res) => {
+  const { id } = req.body
+  client
+    .query('DELETE FROM books WHERE id= $1', [id])
+    .then(() => res.status(200).json({ message: 'success' }))
+    .catch(() => res.status(400).json({ message: 'Something happened!' }))
+}
+
 module.exports = {
   find,
   findOne,
   findById,
   create,
   updateOne,
+  removeOne,
 }
