@@ -49,14 +49,19 @@ const findById = (req, res) => {
 const create = (req, res) => {
   const { title, author, pageCount, id, genre } = req.body
   client
-    .query(`INSERT INTO books VALUES ($1, $2, $3, $4, $5)`, [
+    .query(`INSERT INTO books VALUES ($1, $2, $3, $4, $5) RETURNING *`, [
       title,
       author,
       pageCount,
       id,
       genre,
     ])
-    .then((response) => console.log(response))
+    .then((response) =>
+      res.status(201).json({
+        message: 'The book Successfully saved to DB',
+        data: response.rows,
+      })
+    )
 }
 
 module.exports = {
