@@ -10,7 +10,7 @@ const find = (req, res) => {
         data: response.rows,
       })
     })
-    .catch((err) => console.log(err))
+    .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
 // retrieve books filtering by genre
@@ -25,7 +25,7 @@ const findOne = (req, res) => {
         return res.status(404).json({ message: 'No books found' })
       }
     })
-    .catch((err) => console.log(err))
+    .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
 // retrieve book by id
@@ -42,7 +42,7 @@ const findById = (req, res) => {
         })
       }
     })
-    .catch((err) => console.log(err))
+    .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
 // create new book
@@ -62,6 +62,18 @@ const create = (req, res) => {
         data: response.rows,
       })
     )
+    .catch((err) => res.status(400).json({ message: err.detail }))
+}
+
+// update a collection
+const updateOne = (req, res) => {
+  const { id, genre } = req.body
+  client
+    .query('UPDATE books SET genre = $2 WHERE id = $1 RETURNING *', [id, genre])
+    .then((response) => {
+      res.status(200).json({ message: 'success', data: response.rows })
+    })
+    .catch((err) => res.status(400).json({ message: err.detail }))
 }
 
 module.exports = {
@@ -69,4 +81,5 @@ module.exports = {
   findOne,
   findById,
   create,
+  updateOne,
 }

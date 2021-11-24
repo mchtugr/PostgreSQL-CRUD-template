@@ -15,6 +15,9 @@ app.get('/books/:id', db.books.findById)
 // create new book
 app.post('/books', db.books.create)
 
+// update a book
+app.patch('/books', db.books.updateOne)
+
 const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`server started on port: ${port}`)
