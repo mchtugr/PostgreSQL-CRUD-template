@@ -5,10 +5,6 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'success' })
-})
-
 // retrieve all books
 app.get('/', db.books.find)
 //retrieve filtered books
